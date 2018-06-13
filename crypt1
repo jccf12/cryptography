@@ -1,0 +1,31 @@
+# print(len("09e1c5f70a65ac519458e7e53f36"))
+s = 'attack at dawn'
+p = 'attack at dusk'
+e = '6c73d5240a948c86981bc294814d'
+
+
+s1 = [ord(c) for c in s]
+
+print('s1', s1)
+p1 = [ord(c) for c in p]
+e1 = [int('0x'+e[2*k:2*k+2], 0) for k in range(int(len(e)/2))]
+
+print('e1', e1)
+
+key = [(e1[t]-s1[t]) % 256 for t in range(len(s1))]
+print('key', key)
+
+resultantnums = [(p1[q]+key[q]) % 256 for q in range(len(p1))]
+
+
+print('resultantnums', resultantnums)
+
+resultlist = [hex(n)[2:] if n >= 16 else '0'+hex(n)[2:] for n in resultantnums]
+print(resultlist)
+
+result = ''.join(resultlist)
+
+print(result)
+
+print(''.join([hex((s1[a]+key[a]) % 256)[2:] if (s1[a]+key[a]) %
+               256 >= 16 else '0'+hex((s1[a]+key[a]) % 256)[2:] for a in range(len(s1))]))
