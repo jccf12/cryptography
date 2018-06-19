@@ -1,0 +1,30 @@
+def text_to_ascii(s):
+    return [ord(ch) for ch in s]
+
+
+def ascii_to_hex(lista):
+    return [hex(n)[2:] if n >= 16 else '0'+hex(n)[2:] for n in lista]
+
+
+def text_to_hex(s):
+    return ''.join(ascii_to_hex(text_to_ascii(s)))
+
+
+s = 'attack at dawn'
+p = 'attack at dusk'
+e = '6c73d5240a948c86981bc294814d'
+d = '6c73d5240a948c86981bc294814d'
+
+E = '09e1c5f70a65ac519458e7e53f36'
+ss = text_to_hex(s)
+print(type(ss))
+pp = text_to_hex(p)
+
+xor_sspp = hex(int(ss, 16) ^ int(pp, 16))
+
+print(xor_sspp)
+print(type(xor_sspp))
+
+xor_ssppE = hex(int(E, 16) ^ int(xor_sspp, 16))
+
+print(xor_ssppE)

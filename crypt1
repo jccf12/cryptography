@@ -1,31 +1,84 @@
-# print(len("09e1c5f70a65ac519458e7e53f36"))
+def text_to_ascii(s):
+    return [ord(ch) for ch in s]
+
+
+def ascii_to_hex(lista):
+    return [hex(n)[2:] if n >= 16 else '0'+hex(n)[2:] for n in lista]
+
+
+def hex_to_ascii(lista):
+    return [int('0x' + el, 0) for el in lista]
+
+
+def ascii_to_text(lista):
+    return ''.join([chr(el) for el in lista])
+
+
+def text_to_hex(s):
+    return ''.join(ascii_to_hex(text_to_ascii(s)))
+
+
+def hex_to_text(lista):
+    return ascii_to_text(hex_to_ascii(lista))
+
+
+def hexstring_to_hexslist(s):
+    return [s[2*k:2*k+2] for k in range(int(len(s)/2))]
+
+
 s = 'attack at dawn'
 p = 'attack at dusk'
 e = '6c73d5240a948c86981bc294814d'
+d = '6c73d5240a948c86981bc294814d'
+
+E = '09e1c5f70a65ac519458e7e53f36'
+ss = text_to_hex(s)
+pp = text_to_hex(p)
+
+xor_sspp = hex(int(ss, 16) ^ int(pp, 16))
+
+print(xor_sspp)
+print(type(xor_sspp))
+
+xor_ssppE = hex(int(E, 16) ^ int(xor_sspp, 16))
+
+print(xor_ssppE)
 
 
+hexs = text_to_hex(s)
+
+hexsl = hexstring_to_hexslist(hexs)
+elst = hexstring_to_hexslist(e)
+
+asciis = hex_to_ascii(hexsl)
+asciie = hex_to_ascii(elst)
+
+keyascii = [(asciie[i]-asciis[i]) % 256 for i in range(len(asciie))]
+
+# print(''.join(ascii_to_hex(keyascii)))
+
+'''
 s1 = [ord(c) for c in s]
 
-print('s1', s1)
+# print('s1', s1)
 p1 = [ord(c) for c in p]
 e1 = [int('0x'+e[2*k:2*k+2], 0) for k in range(int(len(e)/2))]
 
-print('e1', e1)
+# print('e1', e1)
 
 key = [(e1[t]-s1[t]) % 256 for t in range(len(s1))]
-print('key', key)
+# print('key', key)
 
 resultantnums = [(p1[q]+key[q]) % 256 for q in range(len(p1))]
 
-
-print('resultantnums', resultantnums)
+# print('resultantnums', resultantnums)
 
 resultlist = [hex(n)[2:] if n >= 16 else '0'+hex(n)[2:] for n in resultantnums]
-print(resultlist)
+# print(resultlist)
 
 result = ''.join(resultlist)
 
-print(result)
+# print(result)
 
-print(''.join([hex((s1[a]+key[a]) % 256)[2:] if (s1[a]+key[a]) %
-               256 >= 16 else '0'+hex((s1[a]+key[a]) % 256)[2:] for a in range(len(s1))]))
+# print(''.join([hex((s1[a]+key[a]) % 256)[2:] if (s1[a]+key[a]) %256 >= 16 else '0'+hex((s1[a]+key[a]) % 256)[2:] for a in range(len(s1))]))
+'''
